@@ -29,7 +29,7 @@ allprojects {
 Add the dependency
 ```
 dependencies {
-    implementation 'com.github.bakehousedigital:resdecorator:0.8'
+    implementation 'com.github.bakehousedigital:resdecorator:0.8.1'
 }
 ```
 
@@ -87,6 +87,10 @@ protected void attachBaseContext(Context newBase) {
         public String getString(Resources resources, int id, Object... formatArgs) {
             return resources.getString(id).toUpperCase().replacesAll(" ", "_");
         }
+        
+        public CharSequence getText(Resources resources, int id, Object... params) {
+            return getString(resources, id, params);
+        }
     }));
 }
 ```
@@ -95,12 +99,13 @@ That is all!
 ## Authors
 
 * **rrdev** - *Initial work* - [bakehousedigital](https://github.com/bakehousedigital)
+* **[freakdudette](https://github.com/freakdudette)** - Added support for retrieving CharSequence types 
 
 
 ## License
 
 ```
-Copyright 2018 bakehousedigital
+Copyright 2019 bakehousedigital
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
