@@ -62,9 +62,9 @@ public class ResourceContextWrapper extends ContextWrapper {
      * @return The context wrapper that enables customized resource retrieval
      * @see ResourceDecorator for more details
      */
-    public static ResourceContextWrapper wrap(Context context, ResourceDecorator resDecorator) {
-        context = ViewPumpContextWrapper.wrap(context);
-        return new ResourceContextWrapper(context, resDecorator);
+    public static ContextWrapper wrap(Context context, ResourceDecorator resDecorator) {
+        context = new ResourceContextWrapper(context, resDecorator);
+        return ViewPumpContextWrapper.wrap(context);
     }
 
     public static void initialize() {
