@@ -17,13 +17,13 @@ package digital.bakehouse.resdecorator;
 
 import android.content.res.Resources;
 
-@SuppressWarnings("NullableProblems")
+import org.jetbrains.annotations.NotNull;
+
 class DelegateResources extends Resources {
 
     private Resources delegate;
     private ResourceDecorator resourceDecorator;
 
-    @SuppressWarnings("deprecation")
     DelegateResources(Resources delegate,
                       ResourceDecorator resourceDecorator) {
         super(delegate.getAssets(),
@@ -33,6 +33,7 @@ class DelegateResources extends Resources {
         this.resourceDecorator = resourceDecorator;
     }
 
+    @NotNull
     @Override
     public CharSequence getText(int id) throws NotFoundException {
         CharSequence result = resourceDecorator.getText(delegate, id);
@@ -42,6 +43,7 @@ class DelegateResources extends Resources {
         return super.getText(id);
     }
 
+    @NotNull
     @Override
     public String getString(int id) throws NotFoundException {
         String result = resourceDecorator.getString(delegate, id);
@@ -51,6 +53,7 @@ class DelegateResources extends Resources {
         return super.getString(id);
     }
 
+    @NotNull
     @Override
     public String getString(int id, Object... formatArgs) throws NotFoundException {
         String result = resourceDecorator.getString(delegate,

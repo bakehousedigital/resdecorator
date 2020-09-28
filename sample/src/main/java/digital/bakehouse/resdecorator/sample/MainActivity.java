@@ -3,13 +3,19 @@ package digital.bakehouse.resdecorator.sample;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.app.ResourceDecoratorAppCompatDelegate;
 
 import digital.bakehouse.resdecorator.ResourceContextWrapper;
 import digital.bakehouse.resdecorator.ResourceDecorator;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ResourceDecoratorAppCompatDelegate delegate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +28,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(ResourceContextWrapper.wrap(newBase, getResourceDecorator()));
+    }
+
+    @NonNull
+    @Override
+    public AppCompatDelegate getDelegate() {
+        if (delegate == null)
+            delegate = new ResourceDecoratorAppCompatDelegate(super.getDelegate(), this);
+        return delegate;
     }
 
     private ResourceDecorator getResourceDecorator() {
