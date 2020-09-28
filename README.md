@@ -29,7 +29,7 @@ allprojects {
 Add the dependency
 ```
 dependencies {
-    implementation 'com.github.bakehousedigital:resdecorator:0.8.1'
+    implementation 'com.github.bakehousedigital:resdecorator:0.9'
 }
 ```
 
@@ -47,16 +47,30 @@ public class SampleApp extends Application {
 
 Inject the ResourceContextWrapper by wrapping the Activity Context and providing your own implementation of the ResourceDecorator.
 ```
-@Override
-protected void attachBaseContext(Context newBase) {
-    super.attachBaseContext(ResourceContextWrapper.wrap(newBase, new ResourceDecorator() {
-        public String getString(Resources resources, int id, Object... formatArgs) {
-            //Return whatever string. If the returned value is null, then the default
-            //string resource implementation will be used -> Resources.getString(id);
-            //...
-        }
-    }));
-}
+public class MainActivity extends AppCompatActivity {
+
+    private ResourceDecoratorAppCompatDelegate delegate;
+
+    @NonNull
+    @Override
+    public AppCompatDelegate getDelegate() {
+    if (delegate == null){
+        delegate = new ResourceDecoratorAppCompatDelegate(super.getDelegate(), this);
+    }
+    return delegate;
+
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ResourceContextWrapper.wrap(newBase, new ResourceDecorator() {
+            public String getString(Resources resources, int id, Object... formatArgs) {
+                //Return whatever string. If the returned value is null, then the default
+                //string resource implementation will be used -> Resources.getString(id);
+                //...
+            }
+        }));
+    }
+}    
 ```
 
 #### Important:
@@ -100,12 +114,12 @@ That is all!
 
 * **rrdev** - *Initial work* - [bakehousedigital](https://github.com/bakehousedigital)
 * **[freakdudette](https://github.com/freakdudette)** - Added support for retrieving CharSequence types 
-
+* **[helod91](https://github.com/helod91)** - Fixed context wrapping for AndroidX
 
 ## License
 
 ```
-Copyright 2019 bakehousedigital
+Copyright 2020 bakehousedigital
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
