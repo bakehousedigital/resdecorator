@@ -19,6 +19,8 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Resources;
 
+import org.jetbrains.annotations.NotNull;
+
 import io.github.inflationx.viewpump.InflateResult;
 import io.github.inflationx.viewpump.Interceptor;
 import io.github.inflationx.viewpump.ViewPump;
@@ -74,8 +76,9 @@ public class ResourceContextWrapper extends ContextWrapper {
     public static void initialize(ViewPump.Builder viewPumpBuilder) {
         ViewPump.init(viewPumpBuilder
                 .addInterceptor(new Interceptor() {
+                    @NotNull
                     @Override
-                    public InflateResult intercept(Chain chain) {
+                    public InflateResult intercept(@NotNull Chain chain) {
                         InflateResult result = chain.proceed(chain.request());
                         ResourceUtils.decorate(result.view(), result.attrs());
                         return result;
