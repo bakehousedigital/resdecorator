@@ -54,11 +54,11 @@ public class MainActivity extends AppCompatActivity {
     @NonNull
     @Override
     public AppCompatDelegate getDelegate() {
-    if (delegate == null){
-        delegate = new ResourceDecoratorAppCompatDelegate(super.getDelegate(), this);
+        if (delegate == null){
+            delegate = new ResourceDecoratorAppCompatDelegate(super.getDelegate(), this);
+        }
+        return delegate;
     }
-    return delegate;
-
 
     @Override
     protected void attachBaseContext(Context newBase) {
